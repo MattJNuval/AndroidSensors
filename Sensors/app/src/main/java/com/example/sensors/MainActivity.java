@@ -17,6 +17,7 @@ import android.widget.TextView;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, SensorEventListener {
 
@@ -30,6 +31,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private Sensor sensor;
     private int type = 0;
     private int pos;
+    String max = " ";
+
+    StackWithMax s;
+    StackWithMin n;
+
+
 
 
 
@@ -160,6 +167,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_UI);
 
 
+
         } else if (position == 5) {
             //Ambient Light Sensor
             if(sensor !=null) {
@@ -169,6 +177,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             type = Sensor.TYPE_LIGHT;
             sensor = sensorManager.getDefaultSensor(type);
             sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_UI);
+            s = new StackWithMax();
+            n = new StackWithMin();
 
 
         } else if (position == 6) {
@@ -180,6 +190,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             type = Sensor.TYPE_MAGNETIC_FIELD;
             sensor = sensorManager.getDefaultSensor(type);
             sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_UI);
+            s = new StackWithMax();
+            n = new StackWithMin();
 
 
         } else if (position == 7) {
@@ -191,6 +203,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             type = Sensor.TYPE_PROXIMITY;
             sensor = sensorManager.getDefaultSensor(type);
             sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_UI);
+            s = new StackWithMax();
+            n = new StackWithMin();
 
         } else if (position == 8) {
             //Pressure Sensor
@@ -200,7 +214,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             textView.setText("POS: " + pos);
             type = Sensor.TYPE_PRESSURE;
             sensor = sensorManager.getDefaultSensor(type);
-            sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_UI);;
+            sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_UI);
+            s = new StackWithMax();
+            n = new StackWithMin();
 
         } else if (position == 9) {
             //Ambient Temperature Sensor
@@ -214,6 +230,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_UI);
             } else {
                 content.setText("SENSOR IS UNAVAILABLE");
+                s = new StackWithMax();
+                n = new StackWithMin();
             }
 
 
@@ -293,9 +311,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                min = String.valueOf(z) +" m/s^2"+ " (Z-axis)";
            }
 
-
            //System.out.println("TYPE: "+type);
-
 
            content.setText("X: " + x + " m/s^2"+"\n"+
                    "Y: " + y + " m/s^2"+"\n"+
@@ -334,7 +350,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                    "MAX: " + max  + "\n"+
                    "MIN: " + min);
 
-       } else if (pos == 2) {
+       } else if (pos == 4) {
            //Gyroscope
            float x = event.values[0];
            float y = event.values[1];
@@ -367,10 +383,20 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                    "MAX: " + max  + "\n"+
                    "MIN: " + min);
 
+        } else if (pos == 5) {
+            //Ambient Light Sensor
+           float lux = event.values[0];
+           s.push(lux);
+           n.push(lux);
 
-        } else if (pos == 4) {
-            //Gyroscope
+           content.setText("LUX: " + lux + " lx" + "\n" +
+                   "MAX: " + s.getMax() + " lx" + "\n" +
+                   "MIN: " + n.getMin() + " lx");
 
+
+
+        } else if (pos == 6) {
+            //Ambient Magnetic Field Sensor
            float x = event.values[0];
            float y = event.values[1];
            float z = event.values[2];
@@ -378,65 +404,60 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
            String min = "";
 
            if(x > y && x > z) {
-               max = String.valueOf(x) +" rad/s"+ " (X-axis)";
+               max = String.valueOf(x) +" muT"+ " (X-axis)";
            } else if(y > z && y > x) {
-               max = String.valueOf(y) +" rad/s"+ " (Y-axis)";
+               max = String.valueOf(y) +" muT"+ " (Y-axis)";
            } else if(z > y && z > x) {
-               max = String.valueOf(z) +" rad/s"+ " (Z-axis)";
+               max = String.valueOf(z) +" muT"+ " (Z-axis)";
            }
 
            if(x < y && x < z) {
-               min = String.valueOf(x) +" rad/s"+ " (X-axis)";
+               min = String.valueOf(x) +" muT"+ " (X-axis)";
            } else if(y < z && y < x) {
-               min = String.valueOf(y) +" rad/s"+ " (Y-axis)";
+               min = String.valueOf(y) +" muT"+ " (Y-axis)";
            } else if(z < y && z < x) {
-               min = String.valueOf(z) +" rad/s"+ " (Z-axis)";
+               min = String.valueOf(z) +" muT"+ " (Z-axis)";
            }
 
-           System.out.println("TYPE: "+type);
-
-
-
-           content.setText("X: " + x + " rad/s"+"\n"+
-                   "Y: " + y + " rad/s"+"\n"+
-                   "Z: " + z + " rad/s"+"\n"+
+           content.setText("X: " + x + " muT"+"\n"+
+                   "Y: " + y + " muT"+"\n"+
+                   "Z: " + z + " muT"+"\n"+
                    "MAX: " + max  + "\n"+
                    "MIN: " + min);
-
-
-
-        } else if (pos == 5) {
-            //Ambient Light Sensor
-           float lux = event.values[0];
-
-           content.setText("LUX: " + lux);
-
-
-
-        } else if (pos == 6) {
-            //Ambient Magnetic Field Sensor
-
 
 
         } else if (pos == 7) {
             //Proximity Sensor
            float cm = event.values[0];
+           s.push(cm);
+           n.push(cm);
 
-           content.setText("cm: " + cm);
+           content.setText("PROXIMITY: " + cm + " cm" + "\n" +
+                   "MAX: " + s.getMax() + " cm" + "\n" +
+                   "MIN: " + n.getMin() + " cm");
+
 
 
         } else if (pos == 8) {
            //Pressure Sensor
            float hPa = event.values[0];
+           s.push(hPa);
+           n.push(hPa);
 
-           content.setText("hPa: " + hPa);
+           content.setText("PRESSURE: " + hPa + " hPa" + "\n" +
+                   "MAX: " + s.getMax() + " hPa" + "\n" +
+                   "MIN: " + n.getMin() + " hPa");
 
 
         } else if (pos == 9) {
             //Ambient Temperature Sensor
            float C = event.values[0];
+           s.push(C);
+           n.push(C);
 
-           content.setText("Deg: "+C);
+           content.setText("LUX: " + C + "\n" +
+                   "MAX: " + s.getMax() + "\n" +
+                   "MIN: " + n.getMin());
 
 
         } else {
@@ -464,6 +485,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         super.onPause();
         sensorManager.unregisterListener(this);
     }
+
+
 
 
 }
