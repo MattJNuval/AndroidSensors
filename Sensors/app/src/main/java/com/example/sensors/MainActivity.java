@@ -17,7 +17,6 @@ import android.widget.TextView;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, SensorEventListener {
 
@@ -36,6 +35,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     StackWithMax s;
     StackWithMin n;
 
+    StackWithMax Mx;
+    StackWithMax My;
+    StackWithMax Mz;
+
+    StackWithMin a;
+    StackWithMin b;
+    StackWithMin c;
+
 
 
 
@@ -45,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        textView = (TextView) findViewById(R.id.tv);
+        //textView = (TextView) findViewById(R.id.tv);
         desc = (TextView) findViewById(R.id.desc);
 
 
@@ -83,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 "PRODUCT: "+android.os.Build.PRODUCT      + "\n" +
                 "VERSION: "+ver+"\n");
 
-        output = "AVAILABLE SENSORS IN DEVICE: \n";
+        output = "ALL THE AVAILABLE SENSORS IN  YOUR DEVICE: \n";
         if(hasMinDelay == true) {
             for(Sensor s: sensors){
                 output +=
@@ -127,10 +134,16 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 sensorManager.unregisterListener(this);
             }
 
-            textView.setText("POS: " + pos);
+            //textView.setText("POS: " + pos);
             type = Sensor.TYPE_ACCELEROMETER;
             sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
             sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_UI);
+            Mx = new StackWithMax();
+            a = new StackWithMin();
+            My = new StackWithMax();
+            b = new StackWithMin();
+            Mz = new StackWithMax();
+            c = new StackWithMin();
 
 
 
@@ -139,10 +152,16 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 sensorManager.unregisterListener(this);
             }
             //Linear Accelerometer
-            textView.setText("POS: " + pos);
+            //textView.setText("POS: " + pos);
             type = Sensor.TYPE_LINEAR_ACCELERATION;
             sensor = sensorManager.getDefaultSensor(type);
             sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_UI);
+            Mx = new StackWithMax();
+            a = new StackWithMin();
+            My = new StackWithMax();
+            b = new StackWithMin();
+            Mz = new StackWithMax();
+            c = new StackWithMin();
 
 
         } else if (position == 3) {
@@ -150,10 +169,16 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             if(sensor !=null) {
                 sensorManager.unregisterListener(this);
             }
-            textView.setText("POS: " + pos);
+            //textView.setText("POS: " + pos);
             type = Sensor.TYPE_GRAVITY;
             sensor = sensorManager.getDefaultSensor(type);
             sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_UI);
+            Mx = new StackWithMax();
+            a = new StackWithMin();
+            My = new StackWithMax();
+            b = new StackWithMin();
+            Mz = new StackWithMax();
+            c = new StackWithMin();
 
 
         } else if (position == 4) {
@@ -161,10 +186,16 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             if(sensor !=null) {
                 sensorManager.unregisterListener(this);
             }
-            textView.setText("POS: " + pos);
+            //textView.setText("POS: " + pos);
             type = Sensor.TYPE_GYROSCOPE;
             sensor = sensorManager.getDefaultSensor(type);
             sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_UI);
+            Mx = new StackWithMax();
+            a = new StackWithMin();
+            My = new StackWithMax();
+            b = new StackWithMin();
+            Mz = new StackWithMax();
+            c = new StackWithMin();
 
 
 
@@ -173,7 +204,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             if(sensor !=null) {
                 sensorManager.unregisterListener(this);
             }
-            textView.setText("POS: " + pos);
+            //textView.setText("POS: " + pos);
             type = Sensor.TYPE_LIGHT;
             sensor = sensorManager.getDefaultSensor(type);
             sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_UI);
@@ -186,12 +217,16 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             if(sensor !=null) {
                 sensorManager.unregisterListener(this);
             }
-            textView.setText("POS: " + pos);
+            //textView.setText("POS: " + pos);
             type = Sensor.TYPE_MAGNETIC_FIELD;
             sensor = sensorManager.getDefaultSensor(type);
             sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_UI);
-            s = new StackWithMax();
-            n = new StackWithMin();
+            Mx = new StackWithMax();
+            a = new StackWithMin();
+            My = new StackWithMax();
+            b = new StackWithMin();
+            Mz = new StackWithMax();
+            c = new StackWithMin();
 
 
         } else if (position == 7) {
@@ -199,7 +234,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             if(sensor !=null) {
                 sensorManager.unregisterListener(this);
             }
-            textView.setText("POS: " + pos);
+            //textView.setText("POS: " + pos);
             type = Sensor.TYPE_PROXIMITY;
             sensor = sensorManager.getDefaultSensor(type);
             sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_UI);
@@ -211,7 +246,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             if(sensor !=null) {
                 sensorManager.unregisterListener(this);
             }
-            textView.setText("POS: " + pos);
+            //textView.setText("POS: " + pos);
             type = Sensor.TYPE_PRESSURE;
             sensor = sensorManager.getDefaultSensor(type);
             sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_UI);
@@ -223,7 +258,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             if(sensor !=null) {
                 sensorManager.unregisterListener(this);
             }
-            textView.setText("POS: " + pos);
+            //textView.setText("POS: " + pos);
             type = Sensor.TYPE_AMBIENT_TEMPERATURE;
             sensor = sensorManager.getDefaultSensor(type);
             if(sensor !=null) {
@@ -239,7 +274,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         } else {
             //All
             sensorManager.unregisterListener(this);
-            textView.setText("POS: " + pos);
+            //textView.setText("POS: " + pos);
             //sensor = null;
             content.setText(output);
         }
@@ -260,64 +295,57 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
            float x = event.values[0];
            float y = event.values[1];
            float z = event.values[2];
-           String max = "";
-           String min = "";
 
-           if(x > y && x > z) {
-               max = String.valueOf(x) +" m/s^2"+ " (X-axis)";
-           } else if(y > z && y > x) {
-               max = String.valueOf(y) +" m/s^2"+ " (Y-axis)";
-           } else if(z > y && z > x) {
-               max = String.valueOf(z) +" m/s^2"+ " (Z-axis)";
-           }
+           Mx.push(x);
+           My.push(y);
+           Mz.push(z);
 
-           if(x < y && x < z) {
-               min = String.valueOf(x) +" m/s^2"+ " (X-axis)";
-           } else if(y < z && y < x) {
-               min = String.valueOf(y) +" m/s^2"+ " (Y-axis)";
-           } else if(z < y && z < x) {
-               min = String.valueOf(z) +" m/s^2"+ " (Z-axis)";
-           }
+           a.push(x);
+           b.push(y);
+           c.push(z);
 
-           //System.out.println("TYPE: "+type);
 
-           content.setText("X: " + x + " m/s^2"+"\n"+
+
+           content.setText("CURRENT VALUES"+ "\n\n" +
+                   "X: " + x + " m/s^2"+"\n"+
                    "Y: " + y + " m/s^2"+"\n"+
-                   "Z: " + z + " m/s^2"+"\n"+
-                   "MAX: " + max  + "\n"+
-                   "MIN: " + min);
+                   "Z: " + z + " m/s^2"+"\n\n"+
+                   "CURRENT MAX"+ "\n\n" +
+                   "X-MAX: " + Mx.getMax() + " m/s^2"+ "\n"+
+                   "Y-MAX: " + My.getMax() + " m/s^2"+ "\n"+
+                   "Z-MAX: " + Mz.getMax() + " m/s^2"+ "\n\n"+
+                   "CURRENT MIN"+ "\n\n" +
+                   "X-MIN: " + a.getMin() + " m/s^2"+ "\n"+
+                   "Y-MIN: " + b.getMin() + " m/s^2"+ "\n"+
+                   "Z-MIN: " + c.getMin() + " m/s^2"+ "\n");
 
         } else if (pos == 2) {
             //Linear Accelerometer
            float x = event.values[0];
            float y = event.values[1];
            float z = event.values[2];
-           String max = "";
-           String min = "";
+           Mx.push(x);
+           My.push(y);
+           Mz.push(z);
 
-           if(x > y && x > z) {
-               max = String.valueOf(x) +" m/s^2"+ " (X-axis)";
-           } else if(y > z && y > x) {
-               max = String.valueOf(y) +" m/s^2"+ " (Y-axis)";
-           } else if(z > y && z > x) {
-               max = String.valueOf(z) +" m/s^2"+ " (Z-axis)";
-           }
+           a.push(x);
+           b.push(y);
+           c.push(z);
 
-           if(x < y && x < z) {
-               min = String.valueOf(x) +" m/s^2"+ " (X-axis)";
-           } else if(y < z && y < x) {
-               min = String.valueOf(y) +" m/s^2"+ " (Y-axis)";
-           } else if(z < y && z < x) {
-               min = String.valueOf(z) +" m/s^2"+ " (Z-axis)";
-           }
 
-           //System.out.println("TYPE: "+type);
 
-           content.setText("X: " + x + " m/s^2"+"\n"+
+           content.setText("CURRENT VALUES"+ "\n\n" +
+                   "X: " + x + " m/s^2"+"\n"+
                    "Y: " + y + " m/s^2"+"\n"+
-                   "Z: " + z + " m/s^2"+"\n"+
-                   "MAX: " + max  + "\n"+
-                   "MIN: " + min);
+                   "Z: " + z + " m/s^2"+"\n\n"+
+                   "CURRENT MAX"+ "\n\n" +
+                   "X-MAX: " + Mx.getMax() + " m/s^2"+ "\n"+
+                   "Y-MAX: " + My.getMax() + " m/s^2"+ "\n"+
+                   "Z-MAX: " + Mz.getMax() + " m/s^2"+ "\n\n"+
+                   "CURRENT MIN"+ "\n\n" +
+                   "X-MIN: " + a.getMin() + " m/s^2"+ "\n"+
+                   "Y-MIN: " + b.getMin() + " m/s^2"+ "\n"+
+                   "Z-MIN: " + c.getMin() + " m/s^2"+ "\n");
 
 
         } else if (pos == 3) {
@@ -325,63 +353,56 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
            float x = event.values[0];
            float y = event.values[1];
            float z = event.values[2];
-           String max = "";
-           String min = "";
+           Mx.push(x);
+           My.push(y);
+           Mz.push(z);
 
-           if(x > y && x > z) {
-               max = String.valueOf(x) +" m/s^2"+ " (X-axis)";
-           } else if(y > z && y > x) {
-               max = String.valueOf(y) +" m/s^2"+ " (Y-axis)";
-           } else if(z > y && z > x) {
-               max = String.valueOf(z) +" m/s^2"+ " (Z-axis)";
-           }
+           a.push(x);
+           b.push(y);
+           c.push(z);
 
-           if(x < y && x < z) {
-               min = String.valueOf(x) +" m/s^2"+ " (X-axis)";
-           } else if(y < z && y < x) {
-               min = String.valueOf(y) +" m/s^2"+ " (Y-axis)";
-           } else if(z < y && z < x) {
-               min = String.valueOf(z) +" m/s^2"+ " (Z-axis)";
-           }
 
-           content.setText("X: " + x + " m/s^2"+"\n"+
+
+           content.setText("CURRENT VALUES"+ "\n\n" +
+                   "X: " + x + " m/s^2"+"\n"+
                    "Y: " + y + " m/s^2"+"\n"+
-                   "Z: " + z + " m/s^2"+"\n"+
-                   "MAX: " + max  + "\n"+
-                   "MIN: " + min);
+                   "Z: " + z + " m/s^2"+"\n\n"+
+                   "CURRENT MAX"+ "\n\n" +
+                   "X-MAX: " + Mx.getMax() + " m/s^2"+ "\n"+
+                   "Y-MAX: " + My.getMax() + " m/s^2"+ "\n"+
+                   "Z-MAX: " + Mz.getMax() + " m/s^2"+ "\n\n"+
+                   "CURRENT MIN"+ "\n\n" +
+                   "X-MIN: " + a.getMin() + " m/s^2"+ "\n"+
+                   "Y-MIN: " + b.getMin() + " m/s^2"+ "\n"+
+                   "Z-MIN: " + c.getMin() + " m/s^2"+ "\n");
 
        } else if (pos == 4) {
            //Gyroscope
            float x = event.values[0];
            float y = event.values[1];
            float z = event.values[2];
-           String max = "";
-           String min = "";
+           Mx.push(x);
+           My.push(y);
+           Mz.push(z);
 
-           if(x > y && x > z) {
-               max = String.valueOf(x) +" m/s^2"+ " (X-axis)";
-           } else if(y > z && y > x) {
-               max = String.valueOf(y) +" m/s^2"+ " (Y-axis)";
-           } else if(z > y && z > x) {
-               max = String.valueOf(z) +" m/s^2"+ " (Z-axis)";
-           }
-
-           if(x < y && x < z) {
-               min = String.valueOf(x) +" m/s^2"+ " (X-axis)";
-           } else if(y < z && y < x) {
-               min = String.valueOf(y) +" m/s^2"+ " (Y-axis)";
-           } else if(z < y && z < x) {
-               min = String.valueOf(z) +" m/s^2"+ " (Z-axis)";
-           }
+           a.push(x);
+           b.push(y);
+           c.push(z);
 
 
-           //   System.out.println("TYPE: "+type);
 
-           content.setText("X: " + x + " m/s^2"+"\n"+
+           content.setText(  "CURRENT VALUES"+ "\n\n" +
+                   "X: " + x + " m/s^2"+"\n"+
                    "Y: " + y + " m/s^2"+"\n"+
-                   "Z: " + z + " m/s^2"+"\n"+
-                   "MAX: " + max  + "\n"+
-                   "MIN: " + min);
+                   "Z: " + z + " m/s^2"+"\n\n"+
+                   "CURRENT MAX"+ "\n\n" +
+                   "X-MAX: " + Mx.getMax() + " m/s^2"+ "\n"+
+                   "Y-MAX: " + My.getMax() + " m/s^2"+ "\n"+
+                   "Z-MAX: " + Mz.getMax() + " m/s^2"+ "\n\n"+
+                   "CURRENT MIN"+ "\n\n" +
+                   "X-MIN: " + a.getMin() + " m/s^2"+ "\n"+
+                   "Y-MIN: " + b.getMin() + " m/s^2"+ "\n"+
+                   "Z-MIN: " + c.getMin() + " m/s^2"+ "\n");
 
         } else if (pos == 5) {
             //Ambient Light Sensor
@@ -400,30 +421,28 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
            float x = event.values[0];
            float y = event.values[1];
            float z = event.values[2];
-           String max = "";
-           String min = "";
+           Mx.push(x);
+           My.push(y);
+           Mz.push(z);
 
-           if(x > y && x > z) {
-               max = String.valueOf(x) +" muT"+ " (X-axis)";
-           } else if(y > z && y > x) {
-               max = String.valueOf(y) +" muT"+ " (Y-axis)";
-           } else if(z > y && z > x) {
-               max = String.valueOf(z) +" muT"+ " (Z-axis)";
-           }
+           a.push(x);
+           b.push(y);
+           c.push(z);
 
-           if(x < y && x < z) {
-               min = String.valueOf(x) +" muT"+ " (X-axis)";
-           } else if(y < z && y < x) {
-               min = String.valueOf(y) +" muT"+ " (Y-axis)";
-           } else if(z < y && z < x) {
-               min = String.valueOf(z) +" muT"+ " (Z-axis)";
-           }
 
-           content.setText("X: " + x + " muT"+"\n"+
+
+           content.setText("CURRENT VALUES"+ "\n\n" +
+                   "X: " + x + " muT"+"\n"+
                    "Y: " + y + " muT"+"\n"+
-                   "Z: " + z + " muT"+"\n"+
-                   "MAX: " + max  + "\n"+
-                   "MIN: " + min);
+                   "Z: " + z + " muT"+"\n\n"+
+                   "CURRENT MAX"+ "\n\n" +
+                   "X-MAX: " + Mx.getMax() + " muT"+ "\n"+
+                   "Y-MAX: " + My.getMax() + " muT"+ "\n"+
+                   "Z-MAX: " + Mz.getMax() + " muT"+ "\n\n"+
+                   "CURRENT MIN"+ "\n\n" +
+                   "X-MIN: " + a.getMin() + " muT"+ "\n"+
+                   "Y-MIN: " + b.getMin() + " muT"+ "\n"+
+                   "Z-MIN: " + c.getMin() + " muT"+ "\n");
 
 
         } else if (pos == 7) {
