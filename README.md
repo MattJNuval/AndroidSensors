@@ -8,7 +8,7 @@
 * [Git Clone](#Git-Clone)
 * [Usage](#Usage)
 * [Contributors](#Contributors)
-* [Acknowledgment](#Acknowledgment)
+* [Acknowledgments](#Acknowledgments)
 
 ### Software Dependencies
 
